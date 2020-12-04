@@ -6,7 +6,7 @@ tree_ck <- function(string, rownum, trees_right, trees_down){
   if (trees_down == 1)
     {if (str_sub(string, 1 + (rownum*trees_right) %% 31, 1 + (rownum*trees_right) %% 31) == "#") 1 else 0}
   else
-    {if (rownum %% 2 == 0 & str_sub(string, (rownum/2+1) %% 31, (rownum/2+1) %% 31) == "#") 1 else 0}
+    {if (rownum %% 2 == 0 & str_sub(string, 1 +((rownum/2) %% 31),1 + ((rownum/2) %% 31)) == "#") 1 else 0}
 }
 
 day3_parsed <- day3 %>% 
@@ -18,8 +18,9 @@ day3_parsed <- day3 %>%
          tree12_flag = pmap_dbl(list(raw_inputs, rownum, 1, 2), tree_ck))
          
 day3_parsed %>% 
-  summarise(sum(tree1_flag),
-            sum(tree3_flag),
-            sum(tree5_flag),
-            sum(tree7_flag),
-            sum(tree12_flag))
+  summarise(a = sum(tree1_flag),
+            b = sum(tree3_flag),
+            c = sum(tree5_flag),
+            d = sum(tree7_flag),
+            e = sum(tree12_flag)) %>% 
+  mutate(a*b*c*d*e)
